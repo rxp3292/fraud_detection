@@ -56,6 +56,6 @@ best_params = rfRandom.best_params_
 
 rfClassifierOpt = RandomForestClassifier(n_estimators=34, min_samples_split=2, min_samples_leaf=2, max_features='sqrt',max_depth=45, bootstrap=False)
 
-cross_val_scores = cross_val_score(rfClassifierOpt,X_train,y_train,scoring='f1')
+cross_val_scores = cross_val_score(rfClassifierOpt,X_test,y_test,scoring='f1')
 
 print('Average F1-Scores for Random Forests are: {:0.2f}'.format(np.mean(cross_val_scores)*100))
