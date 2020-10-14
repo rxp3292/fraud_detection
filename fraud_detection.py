@@ -24,7 +24,7 @@ rfClassifier = RandomForestClassifier(class_weight={0:weights[0], 1:weights[1]})
 
 
 n_estimators = [int(x) for x in np.linspace(2, 50, num=48)]
-max_features = ['auto', 'sqrt']
+max_features = ['auto']
 max_depth = [int(x) for x in np.linspace(5, 50, num = 10)]
 min_samples_split = [int(x) for x in np.linspace(2,10, num=1)]
 min_samples_leaf = [int(x) for x in np.linspace(1,10, num=10)]
