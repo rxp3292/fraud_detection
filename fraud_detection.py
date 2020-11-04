@@ -89,6 +89,6 @@ logRegClassifier = LogisticRegression(fit_intercept = False)
 
 cross_val_scores = cross_val_score(logRegClassifier, X_test_scaled, y_test, scoring='f1')
 
-print('Average F1-Score for Logistic Regression with GridSearchCV is: {:0.2f}'.format(np.mean(cross_val_scores)*100))
+print('Average F1-Score for Logistic Regression with RandomSearchCV is: {:0.2f}'.format(np.mean(cross_val_scores)*100))
 
-print("Average F1-Score for Random Forest without GridSearchCV is: {:0.2f} ".format(np.mean(cross_val_score(LogisticRegression(), X_test_scaled, y_test, scoring='f1')*100)))
+print("Average F1-Score for Random Forest without RandomSearchCV is: {:0.2f} ".format(np.mean(cross_val_score(LogisticRegression(), X_test_scaled, y_test, scoring='f1')*100)))
