@@ -15,7 +15,7 @@ from sklearn.model_selection import RandomizedSearchCV, GridSearchCV, train_test
 
 data = pd.read_csv(r"D:\Github\Fraudulent_Transactions\creditcard.csv")
 
-X = data[data.columns[1:-2]]
+X = data[data.columns[1:-1]]
 y = data[data.columns[-1]].ravel()
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=14, stratify=y)
 
@@ -54,15 +54,13 @@ rfRandom = RandomizedSearchCV(estimator=rfClassifier,
 
 rfRandom.fit(X_train, y_train)
 
-best_params = rfRandom.best_params_
-
-rfClassifierOpt = RandomForestClassifier(n_estimators=39, min_samples_split=8, max_features='log2', max_depth=50, bootstrap=False, class_weight = weights)
+rfClassifierOpt = RandomForestClassifier(**rfRandom.best_params_, class_weight = weights)
 
 cross_val_scores = cross_val_score(rfClassifierOpt,X_test,y_test,scoring='f1')
 
 print('Average F1-Score for Random Forest with RandomSearchCV is: {:0.2f}'.format(np.mean(cross_val_scores)*100))
 
-print("Average F1-Score for Random Forest without RandomSearchCV is: {:0.2f} ".format(np.mean(cross_val_score(RandomForestClassifier(), X_test, y_test, scoring='f1')*100)))
+print("Average F1-Score for Random Forest without RandomSearchCV is: {:0.2f} ".format(np.mean(cross_val_score(RandomForestClassifier(class_weight = weights), X_test, y_test, scoring='f1')*100)))
 
 
 # Logistic Regression Classifier
