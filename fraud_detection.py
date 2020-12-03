@@ -72,7 +72,9 @@ X_test_scaled = pd.DataFrame(standard_scaler.transform(X_test), columns = X_test
 
 logRegClassifier = LogisticRegression()
 
-param_grid = {'fit_intercept': [True, False]}
+param_grid = {'penalty': ['l1', 'l2'],
+              'fit_intercept': [True, False]
+              }
 
 logRegGridSearch = GridSearchCV(estimator = logRegClassifier,
                             param_grid = param_grid,
@@ -83,7 +85,7 @@ logRegGridSearch = GridSearchCV(estimator = logRegClassifier,
 
 logRegGridSearch.fit(X_train_scaled, y_train)
 
-logRegClassifier = LogisticRegression(fit_intercept = False)
+logRegClassifier = LogisticRegression(**logRegGridSearch.best_params_)
 
 cross_val_scores = cross_val_score(logRegClassifier, X_test_scaled, y_test, scoring='f1')
 
