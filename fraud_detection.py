@@ -9,8 +9,6 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.utils import compute_class_weight
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import RandomizedSearchCV, GridSearchCV, train_test_split, cross_val_score
 
 data = pd.read_csv(r"D:\Github\Fraudulent_Transactions\creditcard.csv")
@@ -23,6 +21,8 @@ weights = compute_class_weight(class_weight='balanced',classes=np.unique(y),y=y)
 weights = {0:round(weights[0],2), 1:round(weights[1],2)}
 
 # Random Forest Classifier
+
+from sklearn.ensemble import RandomForestClassifier
 
 rfClassifier = RandomForestClassifier(class_weight = weights)
 
@@ -65,6 +65,8 @@ print("Average F1-Score for Random Forest without RandomSearchCV is: {:0.2f} ".f
 
 # Logistic Regression Classifier
 
+from sklearn.linear_model import LogisticRegression
+
 standard_scaler = StandardScaler()
 
 X_train_scaled = pd.DataFrame(standard_scaler.fit_transform(X_train), columns = X_train.columns)
@@ -73,7 +75,9 @@ X_test_scaled = pd.DataFrame(standard_scaler.transform(X_test), columns = X_test
 logRegClassifier = LogisticRegression()
 
 param_grid = {'penalty': ['l1', 'l2'],
-              'fit_intercept': [True, False]
+              'fit_intercept': [True, False],
+              'solver': ['liblinear'],
+              'class_weight': [weights]
               }
 
 logRegGridSearch = GridSearchCV(estimator = logRegClassifier,
